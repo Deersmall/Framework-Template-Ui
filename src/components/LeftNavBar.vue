@@ -29,10 +29,32 @@
                     leave-active-class="animate__zoomOut"
                     appear >
           <div v-show="flagOfShow" style="width: 100%;position: absolute">
-            <router-link :to="{name:'Home'}" active-class="active" >主页</router-link>
+            <div class="accordion">
+              <div v-for="(item, index) in menuItems"
+                  :key="index"
+                  class="accordion-item">
+                <!-- 菜单标题（可点击部分） -->
+                <div class="accordion-header" @click="toggleMenu(index)">
+                  <el-button type="text" @click="isOpen(index)">{{ item.menuName }}</el-button>
+                </div>
 
-            <router-link to="#" active-class="active" >其它</router-link>
-<!--                 <router-link :to="{name:'TemperatureDetection'}" active-class="active" >温度检测</router-link>-->
+                <!-- 子菜单（带过渡效果） -->
+                <transition
+                    name="slide"
+                    @enter="enter"
+                    @leave="leave"
+                    @after-enter="afterEnter">
+                  <div v-show="isOpen(index)" class="accordion-content">
+                    <router-link v-for="(subItem, subIndex) in item.children"
+                                 :key="subIndex"
+                                  :to="subItem.path"
+                                  class="submenu-link">
+                      {{ subItem.menuName }}
+                    </router-link>
+                  </div>
+                </transition>
+              </div>
+            </div>
           </div>
         </transition>
         <transition
@@ -86,13 +108,55 @@
         data(){
             return{
 
+              activeIndex: null, // 当前展开的菜单索引
+              menuItems: [],
+
+
+
               withOfIconType:'100px',
               flagOfShow:true,
               flagOfPersonalCenter:true,
               user: JSON.parse(sessionStorage.getItem("loginUserInfo"))?JSON.parse(sessionStorage.getItem("loginUserInfo")):{},
             }
         },
+
+        created() {
+          let LoginUser = JSON.parse(sessionStorage.getItem("loginUserInfo"));
+          this.menuItems = LoginUser.sysUser.menus;
+        },
         methods:{
+          // 切换菜单展开状态
+          toggleMenu(index) {
+            this.activeIndex = this.activeIndex === index ? null : index;
+          },
+
+          // 检查菜单是否展开
+          isOpen(index) {
+            return this.activeIndex === index;
+          },
+
+          // 过渡动画钩子
+          enter(el) {
+            el.style.height = 'auto';
+            const height = getComputedStyle(el).height;
+            el.style.height = '0';
+            setTimeout(() => {
+              el.style.height = height;
+            });
+          },
+
+          leave(el) {
+            el.style.height = getComputedStyle(el).height;
+            setTimeout(() => {
+              el.style.height = '0';
+            });
+          },
+
+          afterEnter(el) {
+            el.style.height = 'auto';
+          },
+
+
 
           changeToIcon(){
                 //文字导航栏
@@ -180,7 +244,7 @@
         border-top-left-radius: 15px;
         border-bottom-left-radius: 15px;
         height: 90vh;
-        width: 100vw;
+        width: 9vw !important;
         background-color: #f7fbff;
         display: flex;
         flex-direction: column;
@@ -273,17 +337,91 @@
         --t: 1em;
       }
     }
-    //.changeArea ul{
-    //   font-size: 18px;
-    //  /* 相对定位 */
-    //  position: relative;
-    //  display: flex;
-    //  height: 200px;
+
+    .treeClass {
+      background-color: #f7fbff;
+
+      .el-tree-node__content{
+        white-space:5vw !important;;
+      }
+
+    }
+
+
+    .accordion {
+      width: 250px;
+      font-family: Arial, sans-serif;
+    }
+
+    .accordion-item {
+      border-bottom: 1px solid #eee;
+    }
+
+    .accordion-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 15px;
+      background-color: #f7fbff;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .accordion-header:hover {
+      background-color: #ffffff;
+    }
+
+    .title-link {
+      flex-grow: 1;
+      text-decoration: none;
+      color: #2c3e50;
+      font-weight: bold;
+    }
+
+    //.indicator {
+    //  padding-left: 10px;
+    //  font-size: 12px;
     //}
-    //.changeArea li:hover{
-    //    color: #257B5E;
-    //    cursor: pointer;
-    //}
+
+    .accordion-content {
+      background-color: #fff;
+      overflow: hidden;
+    }
+
+    .submenu-link {
+      display: block;
+      width: 9vw;
+      text-align: center;
+      font-size: 75%;
+      text-decoration: none;
+      color: #409eff;
+      transition: all 0.2s;
+    }
+
+    .submenu-link:hover {
+      //background-color: #f0f4f8;
+      background-color: #f1f3ff;
+      color: #f67bb5;
+    }
+
+    .submenu-link.router-link-exact-active {
+      width: 9vw;
+      text-align: center;
+      color: #b76fff;
+      background-color: #f1f3ff;
+    }
+
+    /* 过渡动画 */
+    .slide-enter-active,
+    .slide-leave-active {
+      transition: height 1s ease-in-out;
+      overflow: hidden;
+    }
+
+    .slide-enter,
+    .slide-leave-to {
+      height: 0 !important;
+    }
 
 
 </style>

@@ -20,7 +20,6 @@ const request = axios.create({
 request.interceptors.request.use(config => {
     config.headers['Content-Type'] = 'application/json;charset=utf-8';
     let loginUserInfo = JSON.parse(sessionStorage.getItem("loginUserInfo"));
-    debugger
     if (loginUserInfo){
         config.headers['Authorization'] = loginUserInfo.token;
     }
