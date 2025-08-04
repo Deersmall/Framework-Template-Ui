@@ -175,7 +175,6 @@
             request.post("/system/auth/logout").then(ref => {
               this.$router.push("/login");// 重定向
             }).catch((err)=>{
-              debugger
               console.log(err);
             });
           },

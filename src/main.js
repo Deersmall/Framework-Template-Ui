@@ -19,7 +19,7 @@ createApp(App).use(store).use(router).use(ElementPlus).mount('#app')
 
 router.beforeEach((to, from, next) => {
     if (to.path.startsWith('/login')) {
-        window.sessionStorage.removeItem('loginUserInfo')
+        sessionStorage.removeItem('loginUserInfo')
         next()
     } else {
         let token = sessionStorage.getItem('loginUserInfo')
@@ -27,24 +27,10 @@ router.beforeEach((to, from, next) => {
         if (token) {
             next()
         } else {
-            //  token不存在，向后端确认
-            request.post("/deerLogin/affirmToken").then(ref => {
-                debugger
-                if (ref.code === 200){
-                    //  后端确认存在后，前端重新设置session,放行
-                    sessionStorage.setItem("loginUserInfo",JSON.stringify(ref.data));
-                    next()
-                }else {
-                    //  拦截，送回登录页
-                    next({
-                        path: '/login'
-                    })
-                }
-            }).catch((err)=>{
-                console.log(err)
-            });
-
-
+            //  更改path，送回登录页
+            next({
+                path: '/login'
+            })
         }
     }
 });

@@ -89,7 +89,6 @@ export default {
       request.post("/system/auth/login",this.sysUser).then(res => {
         if (res.code === 200){
           sessionStorage.setItem("loginUserInfo",JSON.stringify(res.data.loginUserInfo));
-          debugger
           this.$router.push("/main/home");// 重定向
         }
       }).catch((err)=>{

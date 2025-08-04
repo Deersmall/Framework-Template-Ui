@@ -33,43 +33,37 @@ request.interceptors.request.use(config => {
 // response 拦截器
 // 可以在接口响应后统一处理结果
 request.interceptors.response.use(response => {
-        const code = 200;
+        const code = response.data.code || 200;
+        const msg = response.data.message
 
         if (code === 401) {
-            if (!isRelogin.show) {
-                isRelogin.show = true;
-                MessageBox.confirm('登录状态已过期，您可以继续留在该页面，或者重新登录', '系统提示', {
-                        confirmButtonText: '重新登录',
-                        cancelButtonText: '取消',
-                        type: 'warning'
-                    }
-                ).then(() => {
-                    const url = location.href.substring(location.href.indexOf('/soar'))
-                    // debugger
-                    isRelogin.show = false;
-                    store.dispatch('LogOut').then(() => {
-                        location.href = url;
-                    })
-                }).catch(() => {
-                    isRelogin.show = false;
-                });
-            }
-            return Promise.reject('无效的会话，或者会话已过期，请重新登录。')
+            this.$alert('登录状态已过期,请重新登录', '登录已过期', {
+                confirmButtonText: '确定',
+            }).then(() => {
+                this.$router.push("/login");// 重定向
+            }).catch(() => {});
+        }else if (code !== 200) {
+            this.$message.error(msg);
+            return Promise.reject('error')
+        } else {
+            return response.data;
         }
 
-        let res = response.data;
-        // 如果是返回的文件
-        if (response.config.responseType === 'blob') {
-            return res
-        }
-        // 兼容服务端返回的字符串数据
-        if (typeof res === 'string') {
-            res = res ? JSON.parse(res) : res
-        }
-        return res;
+        // let res = response.data;
+        // // 如果是返回的文件
+        // if (response.config.responseType === 'blob') {
+        //     return res
+        // }
+        // // 兼容服务端返回的字符串数据
+        // if (typeof res === 'string') {
+        //     res = res ? JSON.parse(res) : res
+        // }
+        // return res;
     },
     error => {
         console.log('err' + error) // for debug
+        let { message } = error;
+        this.$message.error(message);
         return Promise.reject(error)
     }
 )

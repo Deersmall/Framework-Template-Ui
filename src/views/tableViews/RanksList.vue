@@ -103,7 +103,6 @@ export default {
       postData.where = this.where
 
         request.post("/rank/queryRank",postData).then(ref => {
-        debugger
         if (ref.code === 200){
           // this.$router.push("/main/home");// 重定向
           this.page.total = ref.data.total;
