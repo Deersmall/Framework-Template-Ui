@@ -1,4 +1,8 @@
 import axios from 'axios'
+import {ElMessage, ElMessageBox} from "element-plus";
+import router from '@/router'
+import { markRaw } from 'vue'
+import { Delete } from '@element-plus/icons-vue'
 axios.defaults.withCredentials = true;// 允许跨域携带cookie
 
 
@@ -32,38 +36,72 @@ request.interceptors.request.use(config => {
 
 // response 拦截器
 // 可以在接口响应后统一处理结果
-request.interceptors.response.use(response => {
+request.interceptors.response.use(
+    response => {
         const code = response.data.code || 200;
-        const msg = response.data.message
+        const msg = response.data.message;
 
-        if (code === 401) {
-            this.$alert('登录状态已过期,请重新登录', '登录已过期', {
-                confirmButtonText: '确定',
-            }).then(() => {
-                this.$router.push("/login");// 重定向
-            }).catch(() => {});
-        }else if (code !== 200) {
-            this.$message.error(msg);
-            return Promise.reject('error')
+        // if (code === 401) {
+        //     this.$alert('登录状态已过期,请重新登录', '登录已过期', {
+        //         confirmButtonText: '确定',
+        //     }).then(() => {
+        //         this.$router.push("/login");// 重定向
+        //     }).catch(() => {});
+        // }else
+
+        if (code !== 200) {
+            ElMessage.error(msg)
+            return Promise.reject(msg)
         } else {
             return response.data;
         }
-
-        // let res = response.data;
-        // // 如果是返回的文件
-        // if (response.config.responseType === 'blob') {
-        //     return res
-        // }
-        // // 兼容服务端返回的字符串数据
-        // if (typeof res === 'string') {
-        //     res = res ? JSON.parse(res) : res
-        // }
-        // return res;
     },
-    error => {
-        console.log('err' + error) // for debug
-        let { message } = error;
-        this.$message.error(message);
+        error => {
+
+        if (error.response){
+            const { status , data } = error.response
+
+            debugger
+            switch (status) {
+                case 400:
+                    ElMessage.error(data.message || '请求错误')
+                    break
+                case 401:
+                    ElMessageBox.confirm('登录状态已过期,请重新登录', '登录已过期',
+                        {
+                            confirmButtonText: '确定',
+                            cancelButtonText: '取消',
+                            type: 'warning',
+                            icon: markRaw(Delete),
+                        }
+                    ).then(() => {
+                        // 用户确认操作
+                        router.push("/login");// 重定向
+                    }).catch(() => {
+                        // 用户取消操作
+                    });
+                    break
+                case 403:
+                    ElMessage.error(`没有权限访问该资源 ${status}`)
+                    break
+                case 404:
+                    ElMessage.error(`请求的资源不存在 ${status}`)
+                    break
+                case 500:
+                    ElMessage.error(data.message || `服务器内部错误 ${status}`)
+                    break
+                default:
+                    ElMessage.error(data.message || `连接错误 ${status}`)
+            }
+        }else if (error.request){
+            // 请求已经发出，但没有收到响应
+            ElMessage.error('请求已发出，未收到响应，请检查忘了~~~')
+
+        }else {
+            // 发送请求时出了点问题
+            ElMessage.error('请求发送失败')
+        }
+
         return Promise.reject(error)
     }
 )

@@ -23,10 +23,18 @@
 <!--    列表-->
     <div class="listTable">
       <el-table :data="ranks" style="width: 100%">
+        <!-- 列定义 -->
         <el-table-column prop="name" label="用户名" width="400" />
         <el-table-column prop="points" label="Pts" width="400" />
         <el-table-column prop="playtime" label="游玩时间" width="400" />
         <el-table-column prop="lastlogin" label="上一次在线"/>
+
+        <!-- 自定义空状态 -->
+        <template #empty>
+          <div>
+            <el-empty image="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png" description="描述文字"></el-empty>
+          </div>
+        </template>
 
       </el-table>
     </div>

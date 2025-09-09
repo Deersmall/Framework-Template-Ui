@@ -64,17 +64,17 @@
             appear >
 <!--              图标导航栏-->
           <div v-show="!flagOfShow" style="width: 100%;">
-            <el-tooltip class="item" effect="dark"  content="主页" placement="right">
-              <router-link style="font-size: 20px" :to="{name:'Home'}"  active-class="active2">
-                <li class="el-icon-s-home"></li>
-              </router-link>
-            </el-tooltip>
+<!--            <el-tooltip class="item" effect="dark"  content="主页" placement="right">-->
+<!--              <router-link style="font-size: 20px" :to="{name:'Home'}"  active-class="active2">-->
+<!--                <li class="el-icon-s-home"></li>-->
+<!--              </router-link>-->
+<!--            </el-tooltip>-->
 
-            <el-tooltip class="item" effect="dark" content="其它" placement="right">
-              <router-link style="font-size: 20px" to="#" active-class="active2">
-                <li class="el-icon-coffee-cup"></li>
-              </router-link>
-            </el-tooltip>
+<!--            <el-tooltip class="item" effect="dark" content="其它" placement="right">-->
+<!--              <router-link style="font-size: 20px" to="#" active-class="active2">-->
+<!--                <li class="el-icon-coffee-cup"></li>-->
+<!--              </router-link>-->
+<!--            </el-tooltip>-->
 <!--                  <el-tooltip class="item" effect="dark" content="温度检测" placement="right">-->
 <!--                  <router-link style="font-size: 20px" :to="{name:'TemperatureDetection'}" active-class="active2"><li class="el-icon-sunny"></li></router-link>-->
 <!--                  </el-tooltip>-->

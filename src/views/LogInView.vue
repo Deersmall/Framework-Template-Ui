@@ -89,7 +89,7 @@ export default {
       request.post("/system/auth/login",this.sysUser).then(res => {
         if (res.code === 200){
           sessionStorage.setItem("loginUserInfo",JSON.stringify(res.data.loginUserInfo));
-          this.$router.push("/main/home");// 重定向
+          this.$router.push("/home");// 重定向
         }
       }).catch((err)=>{
         console.log(err);
@@ -101,7 +101,7 @@ export default {
     VisitorLogin(){
       request.post("/deerLogin/visitorLogin").then(ref => {
         if (ref.code === 200){
-          this.$router.push("/main/home");// 重定向
+          this.$router.push("/home");// 重定向
         }
       }).catch((err)=>{
         console.log(err);
