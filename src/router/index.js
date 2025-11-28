@@ -19,9 +19,14 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '@/views/TableView')
   },
   {
-    path: '/setting1',
-    name: 'setting1',
-    component: () => import(/* webpackChunkName: "about" */ '@/views/SettingView')
+    path: '/t1',
+    name: 't1',
+    component: () => import(/* webpackChunkName: "about" */ '@/components/table/t1')
+  },
+  {
+    path: '/t2',
+    name: 't2',
+    component: () => import(/* webpackChunkName: "about" */ '@/components/table/t2')
   },
   {
     path: '/',
@@ -41,9 +46,14 @@ const routes = [
         component: ()=> import("@/views/TableView"),
       },
       {
-        path: '/setting',
-        name: 'setting',
-        component: () => import(/* webpackChunkName: "about" */ '@/views/SettingView')
+        path: '/menu',
+        name: 'menu',
+        component: () => import('@/views/system/setting/menuSetting')
+      },
+      {
+        path: '/role',
+        name: 'role',
+        component: () => import('@/views/system/setting/roleSetting')
       },
     ]
   },

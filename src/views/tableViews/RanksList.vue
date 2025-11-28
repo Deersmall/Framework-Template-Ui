@@ -27,7 +27,7 @@
         <el-table-column prop="name" label="用户名" width="400" />
         <el-table-column prop="points" label="Pts" width="400" />
         <el-table-column prop="playtime" label="游玩时间" width="400" />
-        <el-table-column prop="lastlogin" label="上一次在线"/>
+        <el-table-column prop="lastlogin" label="上一次在线" width="400"/>
 
         <!-- 自定义空状态 -->
         <template #empty>

@@ -20,19 +20,19 @@
         </div>
 
 <!--        小幽灵-->
-          <div class="container">
-            <div class="ghost">
-              <div class="ghostEyes"></div>
-              <div class="ghostDimples"></div>
-              <div class="ghostFeet">
-                <div class="ghostFoot"></div>
-                <div class="ghostFoot"></div>
-                <div class="ghostFoot"></div>
-                <div class="ghostFoot"></div>
-              </div>
-            </div>
-            <div class="shadow"></div>
-          </div>
+<!--          <div class="container">-->
+<!--            <div class="ghost">-->
+<!--              <div class="ghostEyes"></div>-->
+<!--              <div class="ghostDimples"></div>-->
+<!--              <div class="ghostFeet">-->
+<!--                <div class="ghostFoot"></div>-->
+<!--                <div class="ghostFoot"></div>-->
+<!--                <div class="ghostFoot"></div>-->
+<!--                <div class="ghostFoot"></div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--            <div class="shadow"></div>-->
+<!--          </div>-->
 
     </div>
 </template>
@@ -63,20 +63,18 @@
 
 <style scoped>
 .mainBody{
-    height: 100vh;
-    background-color: #257B5E;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    display: flex;
-    background-image: linear-gradient(to right, rgb(247, 209, 215), rgb(191, 227, 241));
-    background-size: 100%;
-    position: relative;
+  height: 100vh;
+  background-color: #257B5E;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  background-image: linear-gradient(to right, rgb(247, 209, 215), rgb(191, 227, 241));
+  background-size: 100%;
+  position: relative;
+  padding: 0 3vw;
 }
 
-    .leftBar{
-      margin-left: 5vw;
-    }
     .dataView{
         width: 90vw;
         height: 90vh;

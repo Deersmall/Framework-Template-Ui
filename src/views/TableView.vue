@@ -1,19 +1,8 @@
 <template>
   <div class="mainBodyOfHome">
-    <!--    数据展示-->
-    <div class="dataDisplayOfHome">
-      <el-button round>Round</el-button>
-      <el-button type="primary" round>Primary</el-button>
-      <el-button type="success" round>Success</el-button>
-      <el-button type="info" round>Info</el-button>
-      <el-button type="warning" round>Warning</el-button>
-      <el-button type="danger" round>Danger</el-button>
-    </div>
-    <!--        数据可视化区域-->
-    <div class="visualizationOfHome">
-      <ranks-list class="ranks-list"></ranks-list>
-    </div>
-
+<!--    <TableView></TableView>-->
+<!--    <RanksList></RanksList>-->
+    <slot name="a"></slot>
   </div>
 
 </template>
@@ -21,11 +10,12 @@
 <script>
 
 import request from "@/utils/request";
+import TableView from "@/components/table/TableView";
 import RanksList from "@/views/tableViews/RanksList";
 
 export default {
-  name: 'TableView',
-  components: {RanksList},
+  name: 'TableView2',
+  components: {RanksList, TableView},
 
   data(){
     return {

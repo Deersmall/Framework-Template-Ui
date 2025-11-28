@@ -10,10 +10,6 @@
               <template #dropdown>
                 <el-dropdown-menu>
                   <el-dropdown-item @click="userLogout">退出登录</el-dropdown-item>
-                  <!--                             <el-dropdown-item>Action 2</el-dropdown-item>-->
-                  <!--                             <el-dropdown-item>Action 3</el-dropdown-item>-->
-                  <!--                             <el-dropdown-item>Action 4</el-dropdown-item>-->
-                  <!--                             <el-dropdown-item>Action 5</el-dropdown-item>-->
                 </el-dropdown-menu>
               </template>
             </el-dropdown>
@@ -65,7 +61,7 @@
 <!--              图标导航栏-->
           <div v-show="!flagOfShow" style="width: 100%;">
 <!--            <el-tooltip class="item" effect="dark"  content="主页" placement="right">-->
-<!--              <router-link style="font-size: 20px" :to="{name:'Home'}"  active-class="active2">-->
+<!--              <router-link style="font-size: 20px" :to="{name:'menu'}"  active-class="active2">-->
 <!--                <li class="el-icon-s-home"></li>-->
 <!--              </router-link>-->
 <!--            </el-tooltip>-->

@@ -10,6 +10,24 @@ import request from "@/utils/request";
 axios.defaults.withCredentials = true;// 允许跨域携带cookie
 
 
+
+// 忽略 ResizeObserver 错误
+if (process.env.NODE_ENV === 'development') {
+    const ignoreWarnings = [
+        'ResizeObserver loop completed with undelivered notifications',
+        'ResizeObserver loop limit exceeded'
+    ];
+
+    const originalError = console.error;
+    console.error = (...args) => {
+        if (ignoreWarnings.some(warning => args[0]?.includes?.(warning))) {
+            return;
+        }
+        originalError.apply(console, args);
+    };
+}
+
+
 createApp(App).use(store).use(router).use(ElementPlus).mount('#app')
 
 // 挂载路由导航守卫
