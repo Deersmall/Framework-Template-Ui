@@ -61,10 +61,10 @@
     }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .mainBody{
+  width: 100vw;
   height: 100vh;
-  background-color: #257B5E;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -76,13 +76,19 @@
 }
 
     .dataView{
-        width: 90vw;
-        height: 90vh;
-        background-color:#FDFFFD ;
-        border-bottom-right-radius: 15px;
-        border-top-right-radius: 15px;
-        overflow: hidden;
-        position: relative;
+      width: 90vw;
+      height: 90vh;
+
+      background: rgba(255, 255, 255, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+
+      //background-color: #ffffffa0;
+
+      border-bottom-right-radius: 15px;
+      border-top-right-radius: 15px;
+
+      overflow: hidden;
+      position: relative;
     }
     .personalCenter{
         position: absolute;

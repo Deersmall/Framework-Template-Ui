@@ -57,11 +57,9 @@ request.interceptors.response.use(
         }
     },
         error => {
-
         if (error.response){
             const { status , data } = error.response
 
-            debugger
             switch (status) {
                 case 400:
                     ElMessage.error(data.message || '请求错误')

@@ -29,7 +29,7 @@
               <div class="menu-info">
                 <el-tag type="success" size="small" class="menu-type">目录</el-tag>
                 <span class="menu-title">{{ menu.menuName }}</span>
-                <span class="menu-path">{{ menu.path }}</span>
+<!--                <span class="menu-path">{{ menu.path }}</span>-->
                 <el-tag :type="menu.status === 0 ? '' : 'danger'" size="small" class="menu-order">状态: {{ menu.status === 0 ? '启用' : '禁用' }}</el-tag>
                 <el-tag type="info" size="small" class="menu-order">排序: {{ menu.orderNum }}</el-tag>
               </div>
@@ -56,6 +56,7 @@
                       <el-tag size="small" class="menu-type">菜单</el-tag>
                       <span class="menu-title">{{ secondMenu.menuName }}</span>
                       <span class="menu-path">{{ secondMenu.path }}</span>
+                      <span class="menu-path">{{ secondMenu.permission }}</span>
                       <el-tag :type="secondMenu.status === 0 ? '' : 'danger'" size="small" class="menu-order">状态: {{ secondMenu.status === 0 ? '启用' : '禁用' }}</el-tag>
                       <el-tag type="info" size="small" class="menu-order">排序: {{ secondMenu.orderNum }}</el-tag>
 
@@ -130,11 +131,11 @@
           <el-input v-model="currentMenu.menuName" placeholder="请输入菜单名称"></el-input>
         </el-form-item>
 
-        <el-form-item label="路由路径" prop="path" v-if="currentMenu.menuType !== 2">
+        <el-form-item label="路由路径" prop="path" v-if="currentMenu.menuType === 1">
           <el-input v-model="currentMenu.path" placeholder="请输入路由路径，如：/Deer"></el-input>
         </el-form-item>
 
-        <el-form-item label="权限字符" prop="permission" v-if="currentMenu.menuType === 2">
+        <el-form-item label="权限字符" prop="permission" v-if="currentMenu.menuType !== 0">
           <el-input v-model="currentMenu.permission" placeholder="请输入权限字符，如：Deer:test"></el-input>
         </el-form-item>
 
@@ -440,13 +441,13 @@ export default {
           ids.push(x.menuId);
         })
       }
-      const vnode = <img src="@/assets/logo.png" height="80" width="80"/>
+      // const vnode = <img src="@/assets/logo.png" height="80" width="80"/>
       ElMessageBox.confirm(`确定要删除菜单"${menu.menuName}"吗？此操作也会删除所有子菜单。`, '警告',
           {
             confirmButtonText: '确定',
             cancelButtonText: '取消',
             type: 'warning',
-            icon: markRaw(vnode),
+            // icon: markRaw(vnode),
           }
       ).then(() => {
         // 删除目录
@@ -628,7 +629,7 @@ export default {
 }
 
 .menu-content {
-  padding: 10px 0 10px 30px;
+  padding: 2vh 2vw;
 }
 
 /* 各级菜单样式 */

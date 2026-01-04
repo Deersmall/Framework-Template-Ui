@@ -6,7 +6,7 @@
         <el-row class="block-col-2">
           <el-col :span="8">
             <el-dropdown trigger="click">
-              <img v-if="user.sysUser.userName"  src="@/assets/images/touxiang.png">
+              <img v-if="user.userName"  src="@/assets/images/touxiang.png">
               <template #dropdown>
                 <el-dropdown-menu>
                   <el-dropdown-item @click="userLogout">退出登录</el-dropdown-item>
@@ -43,8 +43,9 @@
                   <div v-show="isOpen(index)" class="accordion-content">
                     <router-link v-for="(subItem, subIndex) in item.children"
                                  :key="subIndex"
-                                  :to="subItem.path"
-                                  class="submenu-link">
+                                 :to="subItem.path"
+                                 v-permission="subItem.permission"
+                                 class="submenu-link">
                       {{ subItem.menuName }}
                     </router-link>
                   </div>
@@ -98,6 +99,7 @@
 
 <script>
     import request from "@/utils/request";
+    import { getMenuTree } from "@/api/system/sysMenu.js";
 
     export default {
         name: "LeftNavBar",
@@ -112,14 +114,16 @@
               withOfIconType:'100px',
               flagOfShow:true,
               flagOfPersonalCenter:true,
-              user: JSON.parse(sessionStorage.getItem("loginUserInfo"))?JSON.parse(sessionStorage.getItem("loginUserInfo")):{},
+              user: {},
             }
         },
 
         created() {
-          let LoginUser = JSON.parse(sessionStorage.getItem("loginUserInfo"));
-          this.menuItems = LoginUser.sysUser.menus;
+          let loginUserInfo = JSON.parse(sessionStorage.getItem("loginUserInfo"))
+          this.user = loginUserInfo.sysUser
+          this.menuItems = loginUserInfo.sysUser.menus
         },
+
         methods:{
           // 切换菜单展开状态
           toggleMenu(index) {
@@ -224,7 +228,7 @@
         border-radius: 10px;
     }
     a:hover::before{
-        background-color: #69717A;
+        background-color: #69717a;
     }
     .bodyOfManage{
         width: 100%;
@@ -240,7 +244,7 @@
         border-bottom-left-radius: 15px;
         height: 90vh;
         width: 9vw !important;
-        background-color: #f7fbff;
+        background-color: #f7fbffcc;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -334,7 +338,7 @@
     }
 
     .treeClass {
-      background-color: #f7fbff;
+      background-color: #f7fbffcc;
 
       .el-tree-node__content{
         white-space:5vw !important;;
@@ -357,7 +361,6 @@
       justify-content: space-between;
       align-items: center;
       padding: 12px 15px;
-      background-color: #f7fbff;
       cursor: pointer;
       transition: background-color 0.3s;
     }
@@ -379,7 +382,6 @@
     //}
 
     .accordion-content {
-      background-color: #fff;
       overflow: hidden;
     }
 
@@ -394,8 +396,7 @@
     }
 
     .submenu-link:hover {
-      //background-color: #f0f4f8;
-      background-color: #f1f3ff;
+      background-color: rgba(128, 146, 255, 0.2);
       color: #f67bb5;
     }
 
@@ -403,7 +404,8 @@
       width: 9vw;
       text-align: center;
       color: #b76fff;
-      background-color: #f1f3ff;
+      //background-color: #f1f3ff;
+      background-color: rgba(128, 146, 255, 0.2);
     }
 
     /* 过渡动画 */
