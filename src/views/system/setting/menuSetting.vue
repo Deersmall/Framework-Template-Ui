@@ -8,7 +8,7 @@
       </div>
       <div class="header-btn">
         <el-button type="primary" @click="addTopLevelMenu">添加目录</el-button>
-        <el-button :icon="Refresh" circle @click="getMenuTree"/>
+        <Button style="margin-left: 2vw" icon="pi pi-spin pi-sync" severity="contrast" rounded variant="outlined" aria-label="Star" size="small" @click="getMenuTree" />
       </div>
     </div>
 
@@ -162,20 +162,19 @@
 </template>
 
 <script>
-import {markRaw} from "vue";
 import {ElMessage, ElMessageBox} from "element-plus";
-import {Delete,Refresh} from '@element-plus/icons-vue';
+import Button from 'primevue/button';
+
 
 import {addMenu, getMenuTree, removeMenu, updateById} from "@/api/system/sysMenu.js";
 
 export default {
   name: 'menuSetting',
   components: {
-    Refresh
+    Button
   },
   data() {
     return {
-      Refresh: Refresh,
       loading: true,
       // menuFormRef: null,
       // 是否显示弹出框
@@ -480,7 +479,6 @@ export default {
             confirmButtonText: '确定',
             cancelButtonText: '取消',
             type: 'warning',
-            icon: markRaw(Delete),
           }
       ).then(() => {
         // 删除菜单
@@ -505,7 +503,6 @@ export default {
             confirmButtonText: '确定',
             cancelButtonText: '取消',
             type: 'warning',
-            icon: markRaw(Delete),
           }
       ).then(() => {
         // 删除权限

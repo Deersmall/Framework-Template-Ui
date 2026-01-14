@@ -14,7 +14,8 @@
           <template v-for="(btn, btnIndex) in btnList">
             <el-button v-permission="btn.permission" :type="btn.type" @click="btn.click">{{ btn.title }}</el-button>
           </template>
-          <el-button :icon="Refresh" circle @click="getList"/>
+<!--          <el-button :icon="Refresh" circle @click="getList"/>-->
+          <Button style="margin-left: 2vw" icon="pi pi-spin pi-sync" severity="contrast" rounded variant="outlined" aria-label="Star" size="small" @click="getList" />
         </el-divider>
       </div>
 
@@ -48,6 +49,8 @@
 
 <script>
 import {Delete,Refresh} from '@element-plus/icons-vue';
+import Button from 'primevue/button';
+
 
 export default {
 
@@ -56,6 +59,7 @@ export default {
   components: {
     Delete,
     Refresh,
+    Button
   },
 
   props: {
