@@ -119,11 +119,7 @@
     </div>
 
     <!-- 添加/编辑菜单对话框 -->
-    <el-dialog
-        :title="dialogTitle"
-        v-model="dialogVisible"
-        width="500px"
-        :close-on-click-modal="false" >
+    <el-dialog :title="dialogTitle" v-model="dialogVisible" width="500px" :close-on-click-modal="false" >
 
       <el-form :model="currentMenu" label-width="80px" :rules="formRules" ref="menuFormRef" >
 
@@ -154,7 +150,7 @@
 
       <template #footer>
         <span class="dialog-footer">
-          <el-button @click="dialogVisible = false">取 消</el-button>
+          <el-button @click="cancel">取 消</el-button>
           <el-button type="primary" @click="saveMenu">确 定</el-button>
         </span>
       </template>
@@ -260,7 +256,7 @@ export default {
       this.resetCurrentMenu()
       this.currentMenu.menuType = 1
       this.currentMenu.parentId = parentMenu.menuId
-      this.currentMenu.orderNum = (parentMenu.children?.length || 0) + 1
+      this.currentMenu.orderNum = (parentMenu.children ? parentMenu.children.length : 0) + 1
 
       this.isEditing = false
 
@@ -274,7 +270,7 @@ export default {
       this.currentMenu.menuType = 2
       this.currentMenu.parentId = parentMenu.menuId
       this.currentMenu.grandParentId = grandParentMenu.menuId
-      this.currentMenu.orderNum = (parentMenu.children?.length || 0) + 1
+      this.currentMenu.orderNum = (parentMenu.children ? parentMenu.children.length : 0) + 1
 
       this.isEditing = false
 
@@ -389,6 +385,11 @@ export default {
           console.log('表单验证失败', error)
         }
       })
+    },
+
+    cancel() {
+      this.currentMenu = {}
+      this.dialogVisible = false
     },
 
     // 在树中查找菜单

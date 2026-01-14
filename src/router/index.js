@@ -19,16 +19,6 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '@/views/TableView')
   },
   {
-    path: '/t1',
-    name: 't1',
-    component: () => import(/* webpackChunkName: "about" */ '@/components/table/t1')
-  },
-  {
-    path: '/t2',
-    name: 't2',
-    component: () => import(/* webpackChunkName: "about" */ '@/components/table/t2')
-  },
-  {
     path: '/',
     name: 'Manage',
     // redirect: 'main/home',
@@ -41,11 +31,6 @@ const routes = [
       //   component: ()=> import("@/views/Home"),
       // },
       {
-        path:'/test',
-        name:'test',
-        component: ()=> import("@/views/TableView"),
-      },
-      {
         path: '/menu',
         name: 'menu',
         component: () => import('@/views/system/setting/menuSetting')
@@ -54,6 +39,11 @@ const routes = [
         path: '/role',
         name: 'role',
         component: () => import('@/views/system/setting/roleSetting')
+      },
+      {
+        path: '/user',
+        name: 'user',
+        component: () => import('@/views/system/setting/userSetting')
       },
     ]
   },

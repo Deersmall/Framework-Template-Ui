@@ -69,10 +69,10 @@
 import Button from 'primevue/button';
 import Dialog from 'primevue/dialog';
 
-import {getPage, add, upd, del, getRoleMenus, getRoleBoundUser, assignPermissions} from "@/api/system/sysRole.js";
+import {getPage, add, upd, del, getRoleMenus, getRoleBoundUser, assignPermissions,bindUser, unBindUser} from "@/api/system/sysRole.js";
 import {ElMessage} from "element-plus";
 import {getMenuTree} from "@/api/system/sysMenu";
-import {getAllUser} from "@/api/system/sysUser";
+import {getUser} from "@/api/system/sysUser";
 
 export default {
   name: 'roleSetting',
@@ -84,22 +84,13 @@ export default {
   data() {
     return {
 
-      dialogTitle2:'',
-      dialogVisible2:false,
-      roleBoundUser:[],
-      userOptions:[],
-      userQueryForm: {
-        userName:'',
-        nickName:'',
-        pageNum: 1,
-        pageSize: 10,
-      },
-
       /** region 主要内容 */
 
       loading: false,
 
       ids: [],
+
+      nowData:{},
 
       queryForm: {
         roleName: '',
@@ -111,6 +102,7 @@ export default {
       data: {},
 
       /** endregion 主要内容 */
+
 
       /** region 添加角色弹窗设置 */
 
@@ -128,6 +120,23 @@ export default {
       },
 
       /** endregion 添加角色弹窗设置 */
+
+
+      /** region 分配用户 弹窗设置 */
+
+      dialogTitle2:'',
+      dialogVisible2:false,
+      roleBoundUser:[],
+      userOptions:[],
+      userQueryForm: {
+        userName:'',
+        nickName:'',
+        pageNum: 1,
+        pageSize: 10,
+      },
+
+      /** endregion 分配用户 弹窗设置 */
+
 
       /** region 分配菜单/权限 弹窗设置 */
 
@@ -260,7 +269,7 @@ export default {
       this.userQueryForm.pageNum = 1;
       this.userQueryForm.pageSize = 10;
 
-      this.userOptions = (await getAllUser(this.userQueryForm)).data
+      this.userOptions = (await getUser(this.userQueryForm)).data
     },
 
     /** 重置按钮点击事件 */
@@ -281,7 +290,7 @@ export default {
         pageNum: 1,
         pageSize: 10,
       }
-      this.userOptions = (await getAllUser(this.userQueryForm)).data
+      this.userOptions = (await getUser(this.userQueryForm)).data
     },
 
     /** 新增按钮点击事件 */
@@ -310,8 +319,10 @@ export default {
 
     /** 分配用户按钮点击事件 */
     async assignAccounts(data) {
+      // 当前操作角色
+      this.nowData = data
       // 查询用户
-      this.userOptions = (await getAllUser(this.userQueryForm)).data
+      this.userOptions = (await getUser(this.userQueryForm)).data
       // 查询角色已绑定用户
       this.roleBoundUser = (await getRoleBoundUser(data)).data || [];
 
@@ -332,11 +343,28 @@ export default {
 
     /** 绑定用户 */
     bindUser(data) {
+      let userRole = {
+        userId: data.userId,
+        roleId: this.nowData.roleId
+      };
+
+      bindUser(userRole).then(res => {
+        this.roleBoundUser.push(data.userId)
+        ElMessage.success('绑定成功！');
+      }).catch(err => {})
     },
 
     /** 解绑用户 */
     unBindUser(data) {
+      let userRole = {
+        userId: data.userId,
+        roleId: this.nowData.roleId
+      };
 
+      unBindUser(userRole).then(res => {
+        this.roleBoundUser = this.roleBoundUser.filter(item => item !== data.userId)
+        ElMessage.success('解绑成功！');
+      }).catch(err => {})
     },
 
     /** 新增 || 修改 */
@@ -384,10 +412,12 @@ export default {
     /** 弹窗取消方法 */
     close() {
       this.formData = {};
+      this.nowData = {};
+      this.selectedData = [];
+
       this.dialogVisible = false;
       this.dialogVisible2 = false;
       this.dialogVisible3 = false;
-      this.selectedData = [];
     },
 
   }

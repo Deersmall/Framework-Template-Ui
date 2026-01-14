@@ -6,7 +6,7 @@
         <el-row class="block-col-2">
           <el-col :span="8">
             <el-dropdown class="portrait" trigger="click">
-              <img v-if="user.userName"   src="@/assets/images/touxiang.png">
+              <img v-if="user.userName" src="@/assets/images/touxiang.png">
               <template #dropdown>
                 <el-dropdown-menu>
                   <el-dropdown-item @click="userLogout">退出登录</el-dropdown-item>

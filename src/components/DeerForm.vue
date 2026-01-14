@@ -11,7 +11,9 @@
               :type="item.type === 'textarea' ? 'textarea' : 'text'"
               :placeholder="item.placeholder || `请输入${item.label}`"
               :clearable="item.clearable !== false"
-              :disabled="item.disabled" />
+              :disabled="item.disabled"
+              :show-password="item.password"
+          />
 
           <!-- 数字输入框 -->
           <el-input-number
