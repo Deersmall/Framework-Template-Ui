@@ -1,4 +1,5 @@
 import request from "@/utils/request";
+import {downExport} from "@/utils/generalUtils";
 
 /** 用户管理 */
 
@@ -36,6 +37,39 @@ export function del(data) {
         url: '/system/sysUser/del',
         method: "delete",
         data: data,
+    });
+}
+
+// 用户 导入
+export function userImport(files) {
+    return request({
+        url: '/system/sysUser/userFilesUpload',
+        method: "post",
+        data: files,
+        responseType: 'blob' // 重要：必须设置responseType为blob
+    });
+}
+
+// 用户 模板下载
+export function userTemplateDownload() {
+    return request({
+        url: '/system/sysUser/userTemplateDownload',
+        method: "post",
+        responseType: 'blob' // 重要：必须设置responseType为blob
+    }).then(res => {
+        downExport(res);
+    });
+}
+
+// 用户 导出
+export function exportUser(data) {
+    return request({
+        url: '/system/sysUser/exportUser',
+        method: "post",
+        data: data,
+        responseType: 'blob' // 重要：必须设置responseType为blob
+    }).then(res => {
+        downExport(res);
     });
 }
 

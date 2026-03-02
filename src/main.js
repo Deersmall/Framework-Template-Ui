@@ -18,6 +18,8 @@ import PrimeVue from 'primevue/config';
 import ConfirmationService from 'primevue/confirmationservice'
 import DialogService from 'primevue/dialogservice'
 import ToastService from 'primevue/toastservice';
+import AnimateOnScroll from 'primevue/animateonscroll';
+
 
 
 
@@ -37,6 +39,7 @@ import 'element-plus/dist/index.css'
 import DeerView from './components/DeerView';
 import DeerTable from './components/DeerTable';
 import DeerForm from './components/DeerForm';
+import DeerFileUpload from './components/DeerFileUpload';
 
 
 
@@ -81,9 +84,11 @@ createApp(App)
     .use(ConfirmationService)
     .use(DialogService)
     .use(ToastService)
+    .directive('animateonscroll', AnimateOnScroll)
     .component("DeerView", DeerView)    // 组件挂载
     .component("DeerTable", DeerTable)  // 组件挂载
     .component("DeerForm", DeerForm)    // 组件挂载
+    .component("DeerFileUpload", DeerFileUpload)    // 组件挂载
     .mount('#app')
 
 

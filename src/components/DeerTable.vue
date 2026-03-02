@@ -32,7 +32,6 @@
     </div>
 
     <div class="DeerTablePage">
-<!--      <el-pagination background layout="prev, pager, next" :current-page.sync="pageNum" :total="data.length" />-->
       <el-pagination
           @current-change="handleCurrentChange"
           :current-page="data.current"
@@ -48,8 +47,15 @@
 
 
 <script>
+
+import Paginator from 'primevue/paginator';
+
 export default {
   name: 'DeerTable',
+
+  components: {
+    Paginator
+  },
 
   props: {
     border:{
@@ -71,7 +77,6 @@ export default {
 
   data() {
     return {
-      pageNum: 1,
     };
   },
 
@@ -123,6 +128,10 @@ export default {
       justify-content: center;
 
       margin-bottom: 1vh;
+
+      .p-paginator,.p-select{
+        background: #ffffff00
+      }
     }
 
   }

@@ -46,6 +46,11 @@
     </template>
   </Dialog>
 
+  <Dialog v-model:visible="impostDialogVisible" :header="impostDialogTitle" modal style="width: 60vw;"  @hide="close" >
+    <DeerFileUpload url="/system/sysUser/userFilesUpload" accept-type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                    @importTemplateDownload="importTemplateDownload" />
+  </Dialog>
+
 
 </template>
 
@@ -53,21 +58,40 @@
 
 import Button from 'primevue/button';
 import Dialog from 'primevue/dialog';
+import Toast from 'primevue/toast';
+import Badge from 'primevue/badge';
+import FileUpload from 'primevue/fileupload';
+
 import ConfirmDialog from 'primevue/confirmdialog';
 
 import Password from 'primevue/password';
 
 
-
-import {getUser, add, upd, del, updatePassword } from "@/api/system/sysUser";
+import {
+  getUser,
+  add,
+  upd,
+  del,
+  exportUser,
+  updatePassword,
+  userTemplateDownload,
+  userImport
+} from "@/api/system/sysUser";
 import {ElMessage} from "element-plus";
+
+import {getToken} from "@/utils/loginUserInfo";
+import DeerFileUpload from "@/components/DeerFileUpload";
 
 
 export default {
   name: 'userSetting',
   components: {
+    DeerFileUpload,
     Button,
     Dialog,
+    Toast,
+    Badge,
+    FileUpload,
     ConfirmDialog,
     Password
   },
@@ -92,6 +116,8 @@ export default {
 
       data: {},
 
+      files: [],
+
       /** endregion 主要内容 */
 
       /** region 添加角色弹窗设置 */
@@ -113,6 +139,14 @@ export default {
       },
 
       /** endregion 添加角色弹窗设置 */
+
+      /** region 导入弹窗设置 */
+      // 开关
+      impostDialogVisible: false,
+      // 标题
+      impostDialogTitle: '',
+      /** endregion 导入弹窗设置 */
+
 
     }
   },
@@ -138,6 +172,20 @@ export default {
           title:'删除',
           click:this.handleDel,
           permission:"user:del",
+        },
+        {
+          key:'export',
+          type:'primary',
+          title:'导入',
+          click:this.handleImport,
+          permission:"user:import",
+        },
+        {
+          key:'export',
+          type:'warning',
+          title:'导出',
+          click:this.handleExport,
+          permission:"user:export",
         },
 
       ]
@@ -245,6 +293,37 @@ export default {
       }
     },
 
+    /** 导入 */
+    handleImport() {
+      this.impostDialogVisible = true;
+      this.impostDialogTitle = '导入';
+    },
+
+    /** 导出 */
+    handleExport() {
+      exportUser(this.queryForm);
+    },
+
+    /** 导出下载 */
+    importTemplateDownload() {
+      userTemplateDownload();
+    },
+
+
+
+    onRemoveTemplatingFile(file, removeFileCallback, index) {
+      removeFileCallback(index);
+    },
+
+    onClearTemplatingUpload(clear) {
+      clear();
+      this.totalSize = 0;
+      this.totalSizePercent = 0;
+    },
+
+
+
+
     /** 新增 || 修改 */
     saveOrUpdate() {
       this.$refs.deerForm.validate().then(isValid => {
@@ -274,6 +353,7 @@ export default {
       });
     },
 
+    /** 重置密码 */
     ResetPassword(row){
       this.formData = row
       this.formData.password = ''
@@ -298,7 +378,6 @@ export default {
     close() {
       this.formData = {};
       this.dialogVisible = false;
-      this.selectedData = [];
     },
 
   }

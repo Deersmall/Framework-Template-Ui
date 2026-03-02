@@ -37,7 +37,7 @@ request.interceptors.request.use(config => {
 // response 拦截器
 // 可以在接口响应后统一处理结果
 request.interceptors.response.use(
-    response => {
+    (response) => {
         const code = response.data.code || 200;
         const msg = response.data.message;
 
@@ -49,6 +49,14 @@ request.interceptors.response.use(
         //     }).catch(() => {});
         // }else
 
+        // 二进制数据则直接返回
+        if (
+            response.request.responseType === "blob" ||
+            response.request.responseType === "arraybuffer"
+        ) {
+            return response;
+        }
+
         if (code !== 200) {
             ElMessage.error(msg)
             return Promise.reject(msg)
@@ -56,7 +64,7 @@ request.interceptors.response.use(
             return response.data;
         }
     },
-        error => {
+        (error) => {
         if (error.response){
             const { status , data } = error.response
 
@@ -91,10 +99,6 @@ request.interceptors.response.use(
                 default:
                     ElMessage.error(data.message || `连接错误 ${status}`)
             }
-        }else if (error.request){
-            // 请求已经发出，但没有收到响应
-            ElMessage.error('请求已发出，未收到响应，请检查忘了~~~')
-
         }else {
             // 发送请求时出了点问题
             ElMessage.error('请求发送失败')
