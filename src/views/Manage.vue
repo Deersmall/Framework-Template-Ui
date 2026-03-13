@@ -76,7 +76,7 @@
 }
 
     .dataView{
-      width: 90vw;
+      width: 75vw;
       height: 90vh;
 
       background: rgba(255, 255, 255, 0.6);

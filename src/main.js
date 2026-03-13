@@ -33,8 +33,6 @@ import "@/style/style.css";
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 
-
-
 // 自定义组件
 import DeerView from './components/DeerView';
 import DeerTable from './components/DeerTable';

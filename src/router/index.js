@@ -25,15 +25,13 @@ const routes = [
     component: () =>
         import ("@/views/Manage.vue"),
     children: [
-      // {
-      //   path:'/home',
-      //   name:'Home',
-      //   component: ()=> import("@/views/Home"),
-      // },
       {
         path: '/menu',
         name: 'menu',
-        component: () => import('@/views/system/setting/menuSetting')
+        component: () => import('@/views/system/setting/menuSetting'),
+        meta: {
+          title: "菜单设置",
+        },
       },
       {
         path: '/role',
@@ -44,6 +42,16 @@ const routes = [
         path: '/user',
         name: 'user',
         component: () => import('@/views/system/setting/userSetting')
+      },
+      {
+        path: '/workFlowView',
+        name: 'workFlowView',
+        component: () => import('@/views/system/workFlow/workFlowView')
+      },
+      {
+        path: '/test1',
+        name: 'test1',
+        component: () => import('@/views/test/test1')
       },
     ]
   },

@@ -1,0 +1,23 @@
+{
+  "name": "custom",
+  "uri": "http://custom/bpmn",
+  "prefix": "custom",
+  "types": [
+    {
+      "name": "UserTaskExtension",
+      "superClass": ["Element"],
+      "properties": [
+        {
+          "name": "assignee",
+          "isAttr": true,
+          "type": "String"
+        },
+        {
+          "name": "candidateUsers",
+          "isAttr": true,
+          "type": "String"
+        }
+      ]
+    }
+  ]
+}
