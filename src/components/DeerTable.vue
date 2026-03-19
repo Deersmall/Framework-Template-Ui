@@ -2,7 +2,7 @@
   <div class="Deer">
 
     <div class="DeerTable">
-      <el-table :data="data.records" :border="border" table-layout="fixed" @selection-change="handleSelectionChange">
+      <el-table :data="data.records" :border="border" table-layout="fixed" size="small" :cell-style="{ paddingBottom: '0px', height: '20px' }" @selection-change="handleSelectionChange">
 
         <el-table-column
             v-if="columns"
@@ -39,6 +39,7 @@
           :page-size="data.size"
           layout="prev, pager, next, jumper , total"
           :total="data.total"
+          small
           background />
     </div>
 
@@ -106,7 +107,7 @@ export default {
     box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 5px 5px 10px rgba(0, 0, 0, .2);
 
     .DeerTable {
-      height: 49vh;
+      height: 48vh;
       margin-top: 2vh;
 
       .el-table {

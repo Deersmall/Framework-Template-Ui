@@ -1,76 +1,104 @@
 <template>
-
-  <div>
-
-    <h3>任务配置</h3>
-
-    <label>审批人</label>
-
-    <input
-        v-model="assignee"
-        @input="update"
-    />
-
-  </div>
-
+  <process-panel :form-data="formData" :form-columns="formColumns" />
 </template>
 
 <script>
 
-import {
-  getElement,
-  getCustomExtension,
-  updateExtension
-} from "../../bpmn/utils/element";
+import { getElement } from "../../bpmn/utils/element"
+import ProcessPanel from '@/components/panel/processPanel'
 
-export default{
+export default {
 
   props:["modeler","elementId"],
+  components: { ProcessPanel },
 
   data(){
-
     return{
-      assignee:""
-    }
+      formData:{
+        name:"",
 
+        assignee:"",
+        candidateUsers:"",
+        priority:"",
+        remark:"",
+      }
+    }
+  },
+
+  computed: {
+    formColumns() {
+      return [
+        { prop: "name", label: "节点名称" },
+
+        { prop: "assignee", label: "审批人" },
+        { prop: "candidateUsers", label: "候选人" },
+        { prop: "remark", label: "备注" },
+      ];
+    },
   },
 
   watch:{
+
     elementId:{
       immediate:true,
       handler(){
-        this.load();
+        this.load()
+      }
+    },
+    'formData.name':{
+      handler(newVal,oldVal){
+        this.updProperties("name",newVal);
+      }
+    },
+    'formData.assignee':{
+      handler(newVal,oldVal){
+        this.updProperties("camunda:assignee",newVal);
+      }
+    },
+    'formData.candidateUsers':{
+      handler(newVal,oldVal){
+        this.updProperties("camunda:candidateUsers",newVal);
+      }
+    },
+    'formData.remark':{
+      handler(newVal,oldVal){
+        this.updProperties("camunda:remark",newVal);
       }
     }
+
   },
 
   methods:{
 
     load(){
 
-      const element =
-          getElement(this.modeler,this.elementId);
+      const element = getElement(this.modeler,this.elementId)
 
-      const ext =
-          getCustomExtension(element);
+      if(!element) return
 
-      if(ext){
-        this.assignee = ext.assignee || "";
+      const bo = element.businessObject
+
+
+// ⚠️ 一定要用浅拷贝，避免 Proxy 问题
+      this.formData = {
+        name: bo["name"] || "",
+        assignee: bo.$attrs["camunda:assignee"] || "",
+        candidateUsers: bo.$attrs["camunda:candidateUsers"] || "",
+        remark: bo.$attrs["camunda:remark"] || "",
       }
 
     },
 
-    update(){
 
-      const element =
-          getElement(this.modeler,this.elementId);
+    updProperties(propertiesId,propertiesVal){
 
-      updateExtension(
-          this.modeler,
-          element,
-          {
-            assignee:this.assignee
-          }
+      const modeling = this.modeler.get("modeling")
+      const element = getElement(this.modeler,this.elementId)
+
+      if(!element) return
+
+      modeling.updateProperties(element,
+          { [propertiesId]: propertiesVal }
       );
 
     }

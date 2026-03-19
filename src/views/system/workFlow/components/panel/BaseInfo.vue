@@ -1,33 +1,33 @@
 <template>
-
-  <div>
-
-    <h3>节点信息</h3>
-
-    <label>节点名称</label>
-
-    <input
-        v-model="name"
-        @input="update"
-    />
-
-  </div>
-
+  <process-panel :form-data="formData" :form-columns="formColumns" />
 </template>
 
 <script>
 
-import { getElement }
-  from "../../bpmn/utils/element";
+import { getElement } from "../../bpmn/utils/element";
+import ProcessPanel from '@/components/panel/processPanel'
+
 
 export default{
 
   props:["modeler","elementId"],
+  components: { ProcessPanel },
+
 
   data(){
     return{
-      name:""
+      formData: {
+        name:""
+      },
     }
+  },
+
+  computed: {
+    formColumns() {
+      return [
+        { prop: "name", label: "节点名称" },
+      ];
+    },
   },
 
   watch:{
@@ -36,32 +36,31 @@ export default{
       handler(){
         this.load();
       }
+    },
+
+    'formData.name':{
+      handler(newVal,oldVal){
+        this.updProperties("name",newVal);
+      }
     }
   },
 
   methods:{
 
     load(){
-
-      const element =
-          getElement(this.modeler,this.elementId);
-
-      this.name =
-          element.businessObject.name || "";
-
+      const element = getElement(this.modeler,this.elementId);
+      this.formData.name = element.businessObject.name || "";
     },
 
-    update(){
+    updProperties(propertiesId,propertiesVal){
 
-      const element =
-          getElement(this.modeler,this.elementId);
+      const modeling = this.modeler.get("modeling");
+      const element = getElement(this.modeler,this.elementId);
 
-      const modeling =
-          this.modeler.get("modeling");
+      if(!element) return
 
-      modeling.updateProperties(
-          element,
-          { name:this.name }
+      modeling.updateProperties(element,
+          { [propertiesId]: propertiesVal }
       );
 
     }

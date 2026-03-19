@@ -13,6 +13,7 @@
               :clearable="item.clearable !== false"
               :disabled="item.disabled"
               :show-password="item.password"
+              size="small"
           />
 
           <!-- 数字输入框 -->
@@ -23,7 +24,9 @@
               :min="item.min"
               :max="item.max"
               :precision="item.precision"
-              :disabled="item.disabled" />
+              :disabled="item.disabled"
+              size="small"
+          />
 
           <!-- 选择器 -->
           <el-select
@@ -34,7 +37,9 @@
               :disabled="item.disabled"
               @change="item.change ? item.change(formData[item.prop]) : null"
               clearable
-              filterable >
+              filterable
+              size="small"
+          >
 
             <el-option
                 v-for="option in item.options"
@@ -206,6 +211,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-</style>

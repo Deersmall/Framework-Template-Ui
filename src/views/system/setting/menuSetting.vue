@@ -7,7 +7,7 @@
         <h2>菜单管理</h2>
       </div>
       <div class="header-btn">
-        <el-button type="primary" @click="addTopLevelMenu">添加目录</el-button>
+        <el-button type="primary" size="small" @click="addTopLevelMenu">添加目录</el-button>
         <Button style="margin-left: 2vw" icon="pi pi-spin pi-sync" severity="contrast" rounded variant="outlined" aria-label="Star" size="small" @click="getMenuTree" />
       </div>
     </div>
@@ -559,6 +559,7 @@ export default {
 
   .header-btn {
     display: flex;
+    align-items: center;
   }
 
   h2 {
@@ -580,15 +581,12 @@ export default {
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding: 8px 0;
 }
 
 .menu-info {
   display: flex;
   align-items: center;
   flex: 1;
-  flex-wrap: wrap;
-  gap: 10px;
 }
 
 .menu-type {
@@ -603,10 +601,8 @@ export default {
 
 .menu-path {
   color: #606266;
-  font-family: monospace;
   padding: 4px 8px;
   border-radius: 4px;
-  font-size: 12px;
   margin-right: 7vw;
 }
 
@@ -618,7 +614,6 @@ export default {
 
 .menu-actions {
   display: flex;
-  gap: 8px;
   align-items: center;
 }
 

@@ -13,7 +13,12 @@
           "type": "String"
         },
         {
-          "name": "candidateUsers",
+          "name": "candidateusers",
+          "isAttr": true,
+          "type": "String"
+        },
+        {
+          "name": "remark",
           "isAttr": true,
           "type": "String"
         }

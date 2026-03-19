@@ -43,7 +43,7 @@
         <!-- 左侧画布容器 -->
         <div id="canvas" class="canvas" ref="canvas"></div>
       </el-main>
-      <el-aside>
+      <el-aside width="16rem">
         <!-- 右侧属性面板容器 -->
         <PropertyPanel v-if="modelerReady" :modeler="modeler" :elementId="currentElementId"/>
       </el-aside>

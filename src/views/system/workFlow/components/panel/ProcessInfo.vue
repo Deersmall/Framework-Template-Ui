@@ -1,89 +1,79 @@
 <template>
-
-  <div>
-
-    <h3>流程信息</h3>
-
-    <div>
-      <label>流程名称</label>
-      <input v-model="name" @input="updateName"/>
-    </div>
-
-    <div>
-      <label>流程ID</label>
-      <input v-model="id" @change="updateId"/>
-    </div>
-
-  </div>
-
+  <process-panel :form-data="formData" :form-columns="formColumns" />
 </template>
 
 <script>
 
+import "@/style/inputStyle.css";
+import ProcessPanel from '@/components/panel/processPanel'
+
 export default{
 
   props:["modeler"],
+  components: { ProcessPanel },
 
   data(){
 
     return{
-      name:"",
-      id:""
+      formData: {
+        name:"",
+        id:"",
+      },
     }
 
   },
 
+  computed: {
+    formColumns() {
+      return [
+        { prop: "id", label: "流程Id" },
+        { prop: "name", label: "流程名称" },
+      ];
+    },
+  },
+
   mounted(){
-
     this.load();
+  },
 
+  watch:{
+    'formData.id':{
+      handler(newVal,oldVal){
+        this.updProperties("id",newVal);
+
+      }
+    },
+
+    'formData.name':{
+      handler(newVal,oldVal){
+        this.updProperties("name",newVal);
+      }
+    }
   },
 
   methods:{
 
-    getProcess(){
-
-      const canvas = this.modeler.get("canvas");
-
-      return canvas.getRootElement();
-
-    },
-
     load(){
-
       const process = this.getProcess();
-
-      this.name =
-          process.businessObject.name || "";
-
-      this.id =
-          process.businessObject.id;
-
+      this.formData.id = process.businessObject.id;
+      this.formData.name = process.businessObject.name;
     },
 
-    updateName(){
+    getProcess(){
+      const canvas = this.modeler.get("canvas");
+      return canvas.getRootElement();
+    },
 
-      const modeling =
-          this.modeler.get("modeling");
 
-      modeling.updateProperties(
-          this.getProcess(),
-          { name:this.name }
+    updProperties(propertiesId,propertiesVal){
+
+      const modeling = this.modeler.get("modeling");
+
+      modeling.updateProperties(this.getProcess(),
+          { [propertiesId]: propertiesVal }
       );
 
     },
-
-    updateId(){
-
-      const modeling =
-          this.modeler.get("modeling");
-
-      modeling.updateProperties(
-          this.getProcess(),
-          { id:this.id }
-      );
-
-    }
 
   }
 

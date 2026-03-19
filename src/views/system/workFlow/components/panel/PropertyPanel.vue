@@ -2,13 +2,13 @@
 
   <div class="panel">
 
-    <ProcessInfo v-if="!elementId" :modeler="modeler"/>
+    <ProcessInfo v-if="!elementId" :modeler="modeler" />
 
     <div v-else>
 
-      <BaseInfo :modeler="modeler" :elementId="elementId"/>
+      <BaseInfo v-if="!isUserTask" :modeler="modeler" :elementId="elementId"/>
 
-      <TaskConfig v-if="isUserTask" :modeler="modeler" :elementId="elementId"/>
+      <TaskConfig v-else :modeler="modeler" :elementId="elementId"/>
 
     </div>
 
@@ -23,6 +23,7 @@ import BaseInfo from "./BaseInfo.vue";
 import TaskConfig from "./TaskConfig.vue";
 
 import { getElement } from "../../bpmn/utils/element";
+import ProcessPanel from "@/components/panel/processPanel";
 
 export default{
 
@@ -56,6 +57,9 @@ export default{
 <style>
 
 .panel{
+  height: 100%;
+  background-color: #ffffff;
+  border-left: 1px #e0e0e0 solid;
 }
 
 </style>

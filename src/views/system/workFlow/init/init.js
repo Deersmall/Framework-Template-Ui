@@ -12,8 +12,9 @@ export default function() {
       xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC"
       xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0"
       xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-      xmlns:flowable="http://flowable.org/bpmn"
-      targetNamespace="http://www.flowable.org/processdef"
+      xmlns:camunda="http://camunda.org/schema/1.0/bpmn"
+      targetNamespace="http://camunda.org/schema/1.0/bpmn"
+      
       >
       <process id="deerFlow_${randomStr()}" name="deerFlow_${randomStr()}">
         <startEvent id="start_event" name="开始" />

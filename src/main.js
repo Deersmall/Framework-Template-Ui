@@ -2,14 +2,22 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+
+
+
+// 用户权限
 import permission from './utils/permission'
-import AppState from './plugins/appState.js';
-import Noir from './presets/Noir.js';
 
 
 
 import axios from 'axios'
 import request from "@/utils/request";
+
+
+
+// 字体配置
+import '@/style/font/myFont.css'
+import '@/style/font/useFont.css'
 
 
 
@@ -19,7 +27,9 @@ import ConfirmationService from 'primevue/confirmationservice'
 import DialogService from 'primevue/dialogservice'
 import ToastService from 'primevue/toastservice';
 import AnimateOnScroll from 'primevue/animateonscroll';
-
+// 主题配置
+import Noir from './presets/Noir.js';
+import AppState from './plugins/appState.js';
 
 
 
@@ -32,6 +42,8 @@ import "@/style/style.css";
 // ElementPlus
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
+
+
 
 // 自定义组件
 import DeerView from './components/DeerView';

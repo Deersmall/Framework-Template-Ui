@@ -12,7 +12,7 @@
       <div class="header-btn">
         <el-divider class="divider" content-position="right">
           <template v-for="(btn, btnIndex) in btnList">
-            <el-button v-permission="btn.permission" :type="btn.type" @click="btn.click">{{ btn.title }}</el-button>
+            <el-button size="small" v-permission="btn.permission" :type="btn.type" @click="btn.click">{{ btn.title }}</el-button>
           </template>
 <!--          <el-button :icon="Refresh" circle @click="getList"/>-->
           <Button style="margin-left: 2vw" icon="pi pi-spin pi-sync" severity="contrast" rounded variant="outlined" aria-label="Star" size="small" @click="getList" />
@@ -24,8 +24,8 @@
         <deer-form :form-data="queryForm" :form-columns="queryColumns" >
           <template #actions>
             <div class="queryFormBtn">
-              <el-button type="primary" @click="handleQuery(queryForm)">查询</el-button>
-              <el-button @click="handleReset">重置</el-button>
+              <el-button type="primary" size="small" @click="handleQuery(queryForm)">查询</el-button>
+              <el-button size="small" @click="handleReset">重置</el-button>
             </div>
           </template>
         </deer-form>

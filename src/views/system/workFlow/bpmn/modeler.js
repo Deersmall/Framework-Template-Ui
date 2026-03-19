@@ -5,6 +5,7 @@ import { CreateAppendAnythingModule } from 'bpmn-js-create-append-anything';
 import customTranslate from "@/i18n/bpmnJs/customTranslate";
 
 
+
 let modeler = null;
 
 export function createModeler(container) {
@@ -12,16 +13,16 @@ export function createModeler(container) {
     modeler = new BpmnModeler({
         container,
         additionalModules: [
-            CreateElementModule,
-            CreateAppendAnythingModule,
-            { translate: ["value",customTranslate] }
+            CreateElementModule,                        // 左侧工具栏按钮自定义
+            CreateAppendAnythingModule,                 // 左侧工具栏更多按钮
+            { translate: ["value",customTranslate] }    // 汉化包
         ],
         createAppendAnything: {
             palette: true,
             contextPad: true
         },
         moddleExtensions: {
-            custom: customModdle
+            custom: customModdle        // 理论上是节点的拓展，但实测后似乎可以无视
         },
     });
 
