@@ -50,14 +50,11 @@
     </el-container>
   </el-container>
 
-
-  <!--在线查看xml-->
-  <el-drawer :title="xmlTitle" :modal="false" direction="rtl" :visible.sync="xmlOpen" size="60%">
-    <!-- 设置对话框内容高度 -->
-    <el-scrollbar>
-      <pre v-highlight="xmlData"><code class="xml"></code></pre>
-    </el-scrollbar>
-  </el-drawer>
+    <el-drawer v-model="xmlOpen" direction="rtl" :with-header="false" size="60%">
+      <el-scrollbar>
+        <CodeHighlight language="xml" :code="xmlData" />
+      </el-scrollbar>
+    </el-drawer>
 
 </template>
 
@@ -74,6 +71,8 @@ import {createModeler, importXML, } from "../bpmn/modeler";
 import getInitXml from '../init/init'
 
 import Button from 'primevue/button';
+import CodeHighlight from '@/components/codeBlock/codeHighlight';
+
 
 
 
@@ -81,7 +80,8 @@ export default{
 
   components:{
     Button,
-    PropertyPanel
+    PropertyPanel,
+    CodeHighlight
   },
 
   data(){
@@ -180,6 +180,7 @@ export default{
 
         this.xmlTitle = '在线查看xml';
         this.xmlData = xml;
+
         this.xmlOpen = true;
       } catch (err) {
         console.log(err)

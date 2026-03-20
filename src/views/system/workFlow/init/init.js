@@ -13,12 +13,12 @@ export default function() {
       xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0"
       xmlns:xsd="http://www.w3.org/2001/XMLSchema"
       xmlns:camunda="http://camunda.org/schema/1.0/bpmn"
-      targetNamespace="http://camunda.org/schema/1.0/bpmn"
+      targetNamespace="http://camunda.org/schema/1.0/bpmn">
       
-      >
       <process id="deerFlow_${randomStr()}" name="deerFlow_${randomStr()}">
         <startEvent id="start_event" name="开始" />
       </process>
+      
       <bpmndi:BPMNDiagram id="BPMNDiagram_flow">
         <bpmndi:BPMNPlane id="BPMNPlane_flow" bpmnElement="T-2d89e7a3-ba79-4abd-9f64-ea59621c258c">
           <bpmndi:BPMNShape id="BPMNShape_start_event" bpmnElement="start_event" bioc:stroke="">
@@ -29,5 +29,6 @@ export default function() {
           </bpmndi:BPMNShape>
         </bpmndi:BPMNPlane>
       </bpmndi:BPMNDiagram>
+      
     </definitions>`
 }
